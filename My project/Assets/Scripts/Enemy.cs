@@ -11,35 +11,36 @@ public class Enemy : MonoBehaviour{
 	public float enTurnSpeed = 300.0f;
     public float gravity = 20.0f;
 
-    [Header("Pathing")]
+    /*[Header("Pathing")]
     public List<Transform> waypoints;
     private int currentWaypointIndex = 0;
     private bool moving = true;
-    private bool foMoving = true;
+    private bool foMoving = true;*/
 
     [Header("Roboto")]
     public GameObject playerBody;
     public LayerMask playerLayer;
     public float visionRadius;
     public bool playerInvision;
-
+    public Vector3 spawnPoint;
     void Start () {		
         enController = GetComponent <CharacterController>();	
         enAnim = gameObject.GetComponentInChildren<Animator>();
-        //playerBody = GameObject.Find("Player");
+        playerBody = GameObject.Find("Player");
+        spawnPoint = transform.position;
     }
 
     void Update(){
         playerInvision = Physics.CheckSphere(transform.position,visionRadius,playerLayer);
-
+        
         if(!playerInvision){
-            Walk();
+            Idle();
         }else{
             Chase();
         }
     }
 
-    private void Walk(){
+    /*private void Walk(){
         if(waypoints.Count == 0) return;
 
         Transform targetWaypont = waypoints[currentWaypointIndex];
@@ -69,6 +70,22 @@ public class Enemy : MonoBehaviour{
             }
         }
 
+    }*/
+
+    void Idle(){
+        float disV = 0;
+        disV = Vector3.Distance(spawnPoint,transform.position);
+
+        if(disV >= 1){
+            Vector3 directionToSpawn = (spawnPoint - transform.position).normalized;
+            Vector3 moveVector = directionToSpawn * enSpeed * Time.deltaTime;
+            enController.Move(moveVector);
+            Vector3 lookDirection = new Vector3(directionToSpawn.x,0,directionToSpawn.z);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), Time.deltaTime * enTurnSpeed);
+            enAnim.SetInteger ("AnimationPar", 1);
+        }else{
+            enAnim.SetInteger ("AnimationPar", 0);
+        }
     }
 
     void Chase(){
@@ -81,6 +98,5 @@ public class Enemy : MonoBehaviour{
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDirection), Time.deltaTime * enTurnSpeed);
 
         enAnim.SetInteger ("AnimationPar", 1);
-
     }
 }
