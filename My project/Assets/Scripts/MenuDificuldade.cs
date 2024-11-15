@@ -12,9 +12,8 @@ public class NewBehaviourScript : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    /*public void ReadInputNpc(int MenuInput){
-        GlobalVar.TotalNPC = MenuInput;
-        Debug.Log (MenuInput);
-        Debug.Log (GlobalVar.TotalNPC);
-    }*/
+    public void ButtonReturn(){
+        SceneManager.LoadScene(0);
+    }
+
 }

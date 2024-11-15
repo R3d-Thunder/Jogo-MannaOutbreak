@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225e70e727bcb2845b763a95f87cbd04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeCounter: {fileID: 0}
   Enemy: {fileID: 0}
   Npc: {fileID: 0}
+  SpawnCount: 10
+  PlayerController: {fileID: 0}

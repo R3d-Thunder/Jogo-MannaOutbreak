@@ -6,17 +6,14 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour{
 
     public void ButtonStart(){
-
         SceneManager.LoadScene(3);
     }
 
-    public void ButtonCredit(){
-
-        //a implentar
+    public void ButtonLeaderboard(){
+        SceneManager.LoadScene(2);
     }
 
     public void ButtonQuit(){
-
         Application.Quit();
     }
 }
